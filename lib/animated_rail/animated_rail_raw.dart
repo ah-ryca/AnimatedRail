@@ -50,7 +50,7 @@ class AnimatedRailRaw extends StatefulWidget {
   /// custom builder for each item
   final ItemBuilder? builder;
 
-  /// dragable cursor size for the rail
+  /// draggable cursor size for the rail
   final Size? cursorSize;
 
   /// config for rail tile
@@ -99,6 +99,7 @@ class AnimatedRailRawState extends State<AnimatedRailRaw>
   final GlobalKey _containerKey = GlobalKey();
 
   late TextDirection? direction;
+
   @override
   void initState() {
     super.initState();
@@ -395,51 +396,62 @@ class AnimatedRailRawState extends State<AnimatedRailRaw>
   Widget _buildTiles(List<RailItem> items, ThemeData theme) {
     var direction = widget.direction ?? Directionality.of(context);
     var percentage = widget.expand ? interpolate(width, config) : 0.0;
-
     return ValueListenableBuilder<int>(
         valueListenable: selectedIndexNotifier,
         builder: (context, currentSelectedIndex, _) {
-          return ListView(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            children: items.asMap().entries.map((entry) {
-              var item = entry.value;
-              var index = entry.key;
-              if (widget.builder != null) {
-                return widget.builder!(
-                    context, index, item, currentSelectedIndex == index);
-              }
-              return RailTile(
-                widthPercentage: percentage,
-                direction: direction,
-                icon: item.icon,
-                backgroundColor: (item.background ??
-                    widget.railTileConfig?.iconBackground ??
-                    theme.textSelectionTheme.selectionColor),
-                iconColor: currentSelectedIndex == index
-                    ? (item.activeColor ??
-                        widget.railTileConfig?.activeColor ??
-                        theme.primaryColor)
-                    : (item.iconColor ??
-                        widget.railTileConfig?.iconColor ??
-                        theme.textTheme.displayLarge?.color ??
-                        Colors.black),
-                onTap: () {
-                  widget.onTap?.call(index);
-                  if (currentSelectedIndex == index) return;
-                  widget.onChange?.call(index);
-                  selectedIndexNotifier.value = index;
-                },
-                label: item.label,
-                collapsedTextStyle: widget.railTileConfig?.collapsedTextStyle,
-                expandedTextStyle: widget.railTileConfig?.expandedTextStyle,
-                iconSize: widget.railTileConfig?.iconSize,
-                minWidth: widget.width,
-                iconPadding: widget.railTileConfig?.iconPadding,
-                hideCollapsedText:
-                    widget.railTileConfig?.hideCollapsedText ?? false,
-              );
-            }).toList(),
+          return Row(
+            children: [
+              if (items[currentSelectedIndex].content != null)
+                SizedBox(
+                  width: items[currentSelectedIndex].cWidth!,
+                  height: items[currentSelectedIndex].cHeight!,
+                  child: items[currentSelectedIndex].content!,
+                ),
+              Expanded(
+                  child: ListView(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                children: items.asMap().entries.map((entry) {
+                  var item = entry.value;
+                  var index = entry.key;
+                  if (widget.builder != null) {
+                    return widget.builder!(
+                        context, index, item, currentSelectedIndex == index);
+                  }
+                  return RailTile(
+                    widthPercentage: percentage,
+                    direction: direction,
+                    icon: item.icon,
+                    backgroundColor: (item.background ??
+                        widget.railTileConfig?.iconBackground ??
+                        theme.textSelectionTheme.selectionColor),
+                    iconColor: currentSelectedIndex == index
+                        ? (item.activeColor ??
+                            widget.railTileConfig?.activeColor ??
+                            theme.primaryColor)
+                        : (item.iconColor ??
+                            widget.railTileConfig?.iconColor ??
+                            theme.textTheme.displayLarge?.color ??
+                            Colors.black),
+                    onTap: () {
+                      widget.onTap?.call(index);
+                      if (currentSelectedIndex == index) return;
+                      widget.onChange?.call(index);
+                      selectedIndexNotifier.value = index;
+                    },
+                    label: item.label,
+                    collapsedTextStyle:
+                        widget.railTileConfig?.collapsedTextStyle,
+                    expandedTextStyle: widget.railTileConfig?.expandedTextStyle,
+                    iconSize: widget.railTileConfig?.iconSize,
+                    minWidth: widget.width,
+                    iconPadding: widget.railTileConfig?.iconPadding,
+                    hideCollapsedText:
+                        widget.railTileConfig?.hideCollapsedText ?? false,
+                  );
+                }).toList(),
+              ))
+            ],
           );
         });
   }

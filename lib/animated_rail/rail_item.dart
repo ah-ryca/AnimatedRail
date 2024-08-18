@@ -14,6 +14,10 @@ class RailItem {
   /// `required` screen to show when this [RailItem] is selected
   Widget screen;
 
+  Widget? content;
+  double? cWidth;
+  double? cHeight;
+
   /// default icon background color
   /// overrides [AnimatedRailRaw.iconBackground]
   final Color? background;
@@ -26,14 +30,16 @@ class RailItem {
   /// overrides [AnimatedRailRaw.iconColor]
   final Color? iconColor;
 
-  RailItem({
-    this.icon = const SizedBox(),
-    this.screen = const SizedBox(),
-    this.label,
-    this.background,
-    this.activeColor,
-    this.iconColor,
-  });
+  RailItem(
+      {this.icon = const SizedBox(),
+      this.screen = const SizedBox(),
+      this.label,
+      this.background,
+      this.activeColor,
+      this.iconColor,
+      this.content,
+      this.cWidth = 0,
+      this.cHeight = 0});
 }
 
 class RailTileConfig {

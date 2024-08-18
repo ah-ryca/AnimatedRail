@@ -30,7 +30,7 @@ class AnimatedRail extends StatefulWidget {
   /// custom builder for each item
   final ItemBuilder? builder;
 
-  /// dragable cursor size for the rail
+  /// draggable cursor size for the rail
   final Size? cursorSize;
 
   /// config for rail tile
@@ -62,8 +62,19 @@ class AnimatedRail extends StatefulWidget {
 }
 
 class AnimatedRailState extends State<AnimatedRail> {
-  // int selectedIndex = 0;
   ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
+  Widget? content;
+
+  late double? width;
+  late double? maxWidth;
+
+  @override
+  void initState() {
+    super.initState();
+    width = widget.width;
+    maxWidth = widget.maxWidth;
+    _setupContent(0);
+  }
 
   @override
   void didUpdateWidget(covariant AnimatedRail oldWidget) {
@@ -80,6 +91,20 @@ class AnimatedRailState extends State<AnimatedRail> {
 
   void _changeIndex(int i) {
     selectedIndexNotifier.value = i;
+    _setupContent(i);
+  }
+
+  void _setupContent(int index) {
+    setState(() {
+      if (widget.items[index].content != null) {
+        width = widget.width + widget.items[index].cWidth!;
+        maxWidth = widget.maxWidth + widget.items[index].cWidth!;
+      } else {
+        // reset
+        width = widget.width;
+        maxWidth = widget.maxWidth;
+      }
+    });
   }
 
   @override
@@ -106,10 +131,10 @@ class AnimatedRailState extends State<AnimatedRail> {
                   AnimatedRailRaw(
                     constraints: constraints,
                     items: widget.items,
-                    width: widget.width,
+                    width: width!,
                     background: widget.background,
                     direction: widget.direction,
-                    maxWidth: widget.maxWidth,
+                    maxWidth: maxWidth!,
                     selectedIndex: widget.selectedIndex,
                     onTap: _changeIndex,
                     expand: widget.expand,
@@ -125,6 +150,13 @@ class AnimatedRailState extends State<AnimatedRail> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget getWidget(int index) {
+    return Container(
+      color: Colors.yellowAccent,
+      child: Text("index = $index"),
     );
   }
 }

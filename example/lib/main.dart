@@ -96,42 +96,77 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
           child: AnimatedRail(
-        background: hexToColor('#8B77DD'),
-        maxWidth: 275,
-        width: 100,
+        background: Colors.indigo[300],
+        maxWidth: 175,
+        width: 60,
+        direction: TextDirection.rtl,
         railTileConfig: RailTileConfig(
-          iconSize: 30,
-          iconColor: Colors.black,
-          expandedTextStyle: TextStyle(fontSize: 20),
-          collapsedTextStyle: TextStyle(fontSize: 12),
-          activeColor: Colors.purple,
-          iconBackground: Colors.white,
+          iconSize: 22,
+          iconColor: Colors.white,
+          expandedTextStyle: TextStyle(fontSize: 15),
+          collapsedTextStyle: TextStyle(fontSize: 12, color: Colors.white),
+          activeColor: Colors.indigo,
+          iconPadding: EdgeInsets.symmetric(vertical: 5),
+          hideCollapsedText: true,
         ),
+        cursorSize: Size(70, 70),
+        cursorActionType: CursorActionTrigger.clickAndDrag,
         items: [
           RailItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-              screen: _buildTest('Home')),
+            icon: Icon(Icons.home),
+            label: "Home",
+            screen: _buildScreen('Home'),
+            content: Container(
+              width: 500,
+              height: 200,
+              color: Colors.yellowAccent,
+              child: Text(">>> Test"),
+            ),
+            cHeight: 200.0,
+            cWidth: 500,
+          ),
           RailItem(
               icon: Icon(Icons.message_outlined),
               label: 'Messages',
-              screen: _buildTest('Messages')),
+              screen: _buildScreen('Messages')),
           RailItem(
-              icon: Icon(Icons.notifications),
-              label: "Notification",
-              screen: _buildTest('Notification')),
+            icon: Icon(Icons.notifications),
+            label: "Notification",
+            screen: _buildScreen('Notification'),
+            content: Container(
+              width: 300,
+              height: 600,
+              color: Colors.blueAccent,
+              child: Text(">>> Test"),
+            ),
+            cHeight: 600.0,
+            cWidth: 300,
+          ),
           RailItem(
               icon: Icon(Icons.person),
               label: 'Profile',
-              screen: _buildTest('Profile')),
+              screen: _buildScreen('Profile')),
         ],
       )),
+    );
+  }
+
+  Widget _buildScreen(String title) {
+    return Container(
+      color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 40, color: Colors.white),
+        ),
+      ),
     );
   }
 }
 
 class NewCustomizations extends StatelessWidget {
   const NewCustomizations({Key? key}) : super(key: key);
+
   Widget _buildScreen(String title) {
     return Container(
       color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
