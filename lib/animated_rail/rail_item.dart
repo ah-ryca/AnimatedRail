@@ -11,9 +11,6 @@ class RailItem {
   /// string label
   String? label;
 
-  /// `required` screen to show when this [RailItem] is selected
-  Widget screen;
-
   Widget? content;
   double? cWidth;
   double? cHeight;
@@ -32,7 +29,6 @@ class RailItem {
 
   RailItem(
       {this.icon = const SizedBox(),
-      this.screen = const SizedBox(),
       this.label,
       this.background,
       this.activeColor,

@@ -116,18 +116,11 @@ class AnimatedRailState extends State<AnimatedRail> {
         child: Container(
           child: LayoutBuilder(
             builder: (cx, constraints) {
-              var items = widget.items;
               return Stack(
                 alignment: widget.direction == TextDirection.ltr
                     ? Alignment.centerLeft
                     : Alignment.centerRight,
                 children: [
-                  ValueListenableBuilder(
-                    valueListenable: selectedIndexNotifier,
-                    builder: (cx, int? index, _) => items.isNotEmpty
-                        ? items[index ?? 0].screen
-                        : Container(),
-                  ),
                   AnimatedRailRaw(
                     constraints: constraints,
                     items: widget.items,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:animated_rail/animated_rail.dart';
 
@@ -53,175 +51,63 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _buildTest(String title) {
-    return Container(
-      color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 40, color: Colors.white),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => NewCustomizations()));
-                },
-                child: Text('new customizations')),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Color hexToColor(String code) {
-    return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-          child: AnimatedRail(
-        background: Colors.indigo[300],
-        maxWidth: 175,
-        width: 60,
-        direction: TextDirection.rtl,
-        railTileConfig: RailTileConfig(
-          iconSize: 22,
-          iconColor: Colors.white,
-          expandedTextStyle: TextStyle(fontSize: 15),
-          collapsedTextStyle: TextStyle(fontSize: 12, color: Colors.white),
-          activeColor: Colors.indigo,
-          iconPadding: EdgeInsets.symmetric(vertical: 5),
-          hideCollapsedText: true,
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-        cursorSize: Size(70, 70),
-        cursorActionType: CursorActionTrigger.clickAndDrag,
-        items: [
-          RailItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-            screen: _buildScreen('Home'),
-            content: Container(
-              width: 500,
-              height: 200,
-              color: Colors.yellowAccent,
-              child: Text(">>> Test"),
-            ),
-            cHeight: 200.0,
-            cWidth: 500,
+        body: Center(
+            child: AnimatedRail(
+          background: Colors.indigo[300],
+          maxWidth: 175,
+          width: 60,
+          direction: TextDirection.rtl,
+          railTileConfig: RailTileConfig(
+            iconSize: 22,
+            iconColor: Colors.white,
+            expandedTextStyle: TextStyle(fontSize: 15),
+            collapsedTextStyle: TextStyle(fontSize: 12, color: Colors.white),
+            activeColor: Colors.indigo,
+            iconPadding: EdgeInsets.symmetric(vertical: 5),
+            hideCollapsedText: true,
           ),
-          RailItem(
+          cursorSize: Size(70, 70),
+          cursorActionType: CursorActionTrigger.clickAndDrag,
+          items: [
+            RailItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+              content: Container(
+                width: 500,
+                height: 200,
+                color: Colors.yellowAccent,
+                child: Text(">>> Test"),
+              ),
+              cHeight: 200.0,
+              cWidth: 500,
+            ),
+            RailItem(
               icon: Icon(Icons.message_outlined),
               label: 'Messages',
-              screen: _buildScreen('Messages')),
-          RailItem(
-            icon: Icon(Icons.notifications),
-            label: "Notification",
-            screen: _buildScreen('Notification'),
-            content: Container(
-              width: 300,
-              height: 600,
-              color: Colors.blueAccent,
-              child: Text(">>> Test"),
             ),
-            cHeight: 600.0,
-            cWidth: 300,
-          ),
-          RailItem(
+            RailItem(
+              icon: Icon(Icons.notifications),
+              label: "Notification",
+              content: Container(
+                width: 300,
+                height: 600,
+                color: Colors.blueAccent,
+                child: Text(">>> Test"),
+              ),
+              cHeight: 600.0,
+              cWidth: 300,
+            ),
+            RailItem(
               icon: Icon(Icons.person),
               label: 'Profile',
-              screen: _buildScreen('Profile')),
-        ],
-      )),
-    );
-  }
-
-  Widget _buildScreen(String title) {
-    return Container(
-      color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 40, color: Colors.white),
-        ),
-      ),
-    );
-  }
-}
-
-class NewCustomizations extends StatelessWidget {
-  const NewCustomizations({Key? key}) : super(key: key);
-
-  Widget _buildScreen(String title) {
-    return Container(
-      color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 40, color: Colors.white),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBar(),
-        Expanded(
-          child: AnimatedRail(
-            background: Colors.indigo[300],
-            maxWidth: 175,
-            width: 60,
-            direction: TextDirection.rtl,
-            railTileConfig: RailTileConfig(
-              iconSize: 22,
-              iconColor: Colors.white,
-              expandedTextStyle: TextStyle(fontSize: 15),
-              collapsedTextStyle: TextStyle(fontSize: 12, color: Colors.white),
-              activeColor: Colors.indigo,
-              iconPadding: EdgeInsets.symmetric(vertical: 5),
-              hideCollapsedText: true,
             ),
-            cursorSize: Size(70, 70),
-            cursorActionType: CursorActionTrigger.clickAndDrag,
-            items: [
-              RailItem(
-                  icon: Icon(Icons.home),
-                  label: "Home",
-                  screen: _buildScreen('Home')),
-              RailItem(
-                  icon: Icon(Icons.message_outlined),
-                  label: 'Messages',
-                  screen: _buildScreen('Messages')),
-              RailItem(
-                  icon: Icon(Icons.notifications),
-                  label: "Notification",
-                  screen: _buildScreen('Notification')),
-              RailItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                  screen: _buildScreen('Profile')),
-            ],
-          ),
-        ),
-      ],
-    );
+          ],
+        )));
   }
 }
